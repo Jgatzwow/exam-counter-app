@@ -43,7 +43,7 @@ function App() {
 
 
         <div className={'App__wrapper'}>
-            <h1 className={'counter__title'}>Hello It-incubator this is my Counter</h1>
+            <h1 className={'counter__title'}>Hello</h1>
             <div className="content__wrapper">
                 <Settings setCount={setCount}
                           setThreshold={setThreshold}

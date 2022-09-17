@@ -10,13 +10,13 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 50px;
 }
 
 
-.App {
+.content__wrapper {
     border: 1px solid cyan;
     background: #090941;
-    width: 20vw;
 }
 
 .counter {
@@ -69,4 +69,16 @@
 .inc__btn:hover {
     cursor: pointer;
     background: yellow;
+}
+
+.error__input {
+    border: 1px solid red;
+    color: red;
+}
+.default__input {
+
+}
+
+.error__input:focus {
+    outline: none;
 }

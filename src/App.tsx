@@ -40,9 +40,11 @@ function App() {
 
 
     return (
-        <div className={'App__wrapper'}>
 
-            <div className={'content__wrapper'}>
+
+        <div className={'App__wrapper'}>
+            <h1 className={'counter__title'}>Hello It-incubator this is my Counter</h1>
+            <div className="content__wrapper">
                 <Settings setCount={setCount}
                           setThreshold={setThreshold}
                           maxValue={maxValue}
@@ -55,7 +57,7 @@ function App() {
                 />
             </div>
             <div className="content__wrapper">
-                <div>
+                <div className={'counter__screen-wrapper'}>
                     {error ? <ErrorScreen error={error}/>
                         : <div className={'counter'}>
                             <CounterScreen greeting={greeting}

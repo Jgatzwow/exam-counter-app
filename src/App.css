@@ -10,6 +10,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-wrap: wrap;
     gap: 50px;
 }
 
@@ -17,6 +18,13 @@
 .content__wrapper {
     border: 1px solid cyan;
     background: #090941;
+    width: 30vw;
+    height: 50vh;
+}
+
+.counter__screen-wrapper {
+    display: grid;
+    grid-template-rows: 4fr 1fr;
 }
 
 .counter {
@@ -24,12 +32,14 @@
     justify-content: center;
     align-items: center;
     background: cyan;
+    text-align: center;
     padding: 10px;
     margin: 10px;
     border-radius: 5px;
     font-size: 40px;
     font-weight: 700;
     min-height: 150px;
+    gap: 10px;
 }
 
 .btn_wrapper {
@@ -72,13 +82,34 @@
 }
 
 .error__input {
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
     border: 1px solid red;
     color: red;
 }
-.default__input {
 
+.default__input {
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
 }
 
 .error__input:focus {
     outline: none;
+}
+
+.settings__wrapper {
+    display: grid;
+    grid-template-rows: repeat(2, 2fr) 1fr;
+}
+
+.settings__title {
+    font-size: 30px;
+}
+.counter__title {
+    font-size: 40px;
+    flex-basis: 100%;
+    text-align: center;
+    color: #00d8ff;
 }

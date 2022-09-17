@@ -49,15 +49,17 @@ export const Settings: FC<PropsType> = (props) => {
     }
 
     return (
-        <div>
+        <div className={'settings__wrapper'}>
             <div className={'counter'}>
-                <h2>max value:</h2>
-                <input className={error ? 'error__input' : 'default__input'} onChange={onMaxValueChangeHandler}
+                <h2 className={'settings__title'}>max value:</h2>
+                <input className={error ? 'error__input' : 'default__input'}
+                       onChange={onMaxValueChangeHandler}
                        value={maxValue} type="number"/>
             </div>
             <div className={'counter'}>
-                <h2>start value:</h2>
-                <input className={error ? 'error__input' : 'default__input'} onChange={onStartValueChangeHandler}
+                <h2 className={'settings__title'}>start value:</h2>
+                <input className={error ? 'error__input' : 'default__input'}
+                       onChange={onStartValueChangeHandler}
                        value={startValue} type="number"/>
             </div>
             <div className={'btn_wrapper'}>

@@ -25,27 +25,30 @@ export const Settings: FC<PropsType> = (props) => {
     const onMaxValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setMaxValue(+e.currentTarget.value)
         setError(null)
+        setCount(0)
+        setScreenToggle(false)
     }
     const onStartValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         setStartValue(+e.currentTarget.value)
+        setCount(0)
         setError(null)
+        setScreenToggle(false)
     }
 
 
     const onSetCountBtnHandler = () => {
         if (startValue === maxValue) {
-            setError('Start value cannot equal max value')
+            setError('Start value should not equal max value')
         } else if (startValue < 0) {
-            setError('Values cannot be negative integers')
+            setError('Values should not be negative integers')
         } else if (startValue > maxValue) {
-            setError('Starting value cannot be bigger than max value')
+            setError('Starting value should not be bigger than max value')
         } else {
             setError(null)
             setCount(startValue)
             setThreshold(maxValue)
             setScreenToggle(true)
         }
-
     }
 
     return (
@@ -64,7 +67,7 @@ export const Settings: FC<PropsType> = (props) => {
             </div>
             <div className={'btn_wrapper'}>
 
-                <SuperButton onClick={onSetCountBtnHandler} className={'inc__btn'}>
+                <SuperButton onClick={onSetCountBtnHandler} className={'default__btn'}>
                     set
                 </SuperButton>
             </div>

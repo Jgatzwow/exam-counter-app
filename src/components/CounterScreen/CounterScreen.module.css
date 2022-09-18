@@ -1,7 +1,18 @@
 .counter {
+    font-size: 50px;
     color: black;
+    font-style: italic;
 }
 
 .red__counter {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+    font-size: 60px;
     color: red;
+}
+
+.red__counter::after {
+    content:'max value reached';
 }

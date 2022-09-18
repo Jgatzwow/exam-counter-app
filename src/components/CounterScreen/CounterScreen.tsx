@@ -1,5 +1,5 @@
 import React from 'react';
-import s from './CounterScreen.module.css'
+import styles from './CounterScreen.module.css'
 
 type PropsType = {
     count: number
@@ -11,10 +11,11 @@ type PropsType = {
 
 export const CounterScreen = (props: PropsType) => {
     const {count, threshold, greeting, screenToggle} = props
+    const displayCount = count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
     return (
         <>{
-            screenToggle ? <div className={count === threshold ? s.red__counter : s.counter}>
-                    {count}
+            screenToggle ? <div className={count === threshold ? styles.red__counter : styles.counter}>
+                    {displayCount}
                 </div>
                 : <div>{greeting}</div>
         }</>

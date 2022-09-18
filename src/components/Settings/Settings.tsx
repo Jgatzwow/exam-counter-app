@@ -64,7 +64,7 @@ export const Settings: FC<PropsType> = (props) => {
                 <SuperInput type={'number'}
                             className={error ? 'error__input' : 'default__input'}
                             onChange={onMaxValueChangeHandler}
-                            value={maxValue}/>
+                            value={maxValue.toString()}/>
                 {/*<input className={error ? 'error__input' : 'default__input'}
                        onChange={onMaxValueChangeHandler}
                        value={maxValue} type="number"/>*/}
@@ -74,7 +74,7 @@ export const Settings: FC<PropsType> = (props) => {
                 <SuperInput type={'number'}
                             className={error ? 'error__input' : 'default__input'}
                             onChange={onStartValueChangeHandler}
-                            value={startValue}/>
+                            value={startValue.toString()}/>
                 {/*<input className={error ? 'error__input' : 'default__input'}
                        onChange={onStartValueChangeHandler}
                        value={startValue} type="number"/>*/}

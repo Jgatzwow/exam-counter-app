@@ -16,7 +16,6 @@ function App() {
     const [error, setError] = useState<string>('')
     const [screenToggle, setScreenToggle] = useState<boolean>(false)
 
-
     console.log('count: ', count)
     console.log('threshold: ', threshold)
     console.log('maxValue: ', maxValue)
@@ -71,12 +70,11 @@ function App() {
 
     console.log('localStorageInfo: ', localStorageInfo)
 
-
     return (
 
 
         <div className={'App__wrapper'}>
-            <h1 className={'counter__title'}>Hello</h1>
+            <h1 className={'counter__title'}>Hello this is my Counter</h1>
             <div className="content__wrapper">
                 <Settings setCount={setCount}
                           setThreshold={setThreshold}

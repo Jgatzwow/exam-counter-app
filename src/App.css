@@ -71,10 +71,6 @@
     opacity: 0.5;
 }
 
-.default__btn:focus {
-    background: #00d8ff;
-    outline: none;
-}
 
 .default__btn:hover {
     cursor: pointer;

@@ -1,0 +1,20 @@
+.superInput {
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+}
+
+.error__input {
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+    border: 1px solid red;
+    color: red;
+}
+
+.error__input:focus {
+    outline: none;
+}
+.error {
+    color: red;
+}

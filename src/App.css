@@ -81,24 +81,6 @@
     background: yellow;
 }
 
-.error__input {
-    font-size: 20px;
-    text-align: center;
-    padding: 10px;
-    border: 1px solid red;
-    color: red;
-}
-
-.default__input {
-    font-size: 20px;
-    text-align: center;
-    padding: 10px;
-}
-
-.error__input:focus {
-    outline: none;
-}
-
 .settings__wrapper {
     display: grid;
     grid-template-rows: repeat(2, 2fr) 1fr;

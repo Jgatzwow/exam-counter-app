@@ -11,7 +11,7 @@ type PropsType = {
 
 export const CounterScreen = (props: PropsType) => {
     const {count, threshold, greeting, screenToggle} = props
-    const displayCount = count.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+    const displayCount = count.toLocaleString();
     return (
         <>{
             screenToggle ? <div className={count === threshold ? styles.red__counter : styles.counter}>

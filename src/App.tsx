@@ -6,14 +6,14 @@ import {Settings} from './components/Settings/Settings';
 import {ErrorScreen} from './components/ErrorScreen/ErrorScren';
 
 function App() {
-    const greeting = 'Choose settings, PLease! =)'
+    const greeting = 'Choose settings, Please! =)'
     let initialStateValue = 0
 
     const [count, setCount] = useState(initialStateValue)
     const [threshold, setThreshold] = useState(initialStateValue)
     const [maxValue, setMaxValue] = useState(initialStateValue)
     const [startValue, setStartValue] = useState(initialStateValue)
-    const [error, setError] = useState<string | null>(null)
+    const [error, setError] = useState<string>('')
     const [screenToggle, setScreenToggle] = useState<boolean>(false)
 
 
@@ -66,37 +66,56 @@ function App() {
         }
     }, [])
 
-    /*const localStorageInfo = {
-        'counterScreenVal': JSON.stringify(count),
-        'screenToggle': JSON.stringify(screenToggle),
-        'startValue': JSON.stringify(startValue),
-        'maxValue': JSON.stringify(maxValue),
-        'error': JSON.stringify(error)*/
-
-     useEffect(() => {
-         localStorage.setItem('counterScreenVal', JSON.stringify(count))
-         localStorage.setItem('screenToggle', JSON.stringify(screenToggle))
-         localStorage.setItem('startValue', JSON.stringify(startValue))
-         localStorage.setItem('maxValue', JSON.stringify(maxValue))
-         localStorage.setItem('error', JSON.stringify(error))
-     }, [count, startValue, maxValue, screenToggle, error])
-
-/*    useEffect(() => {
-        let appInfoAsString = localStorage.getItem('appInfo')
-        if (appInfoAsString) {
-            let newAppInfo = JSON.parse(appInfoAsString)
-            console.log(newAppInfo)
-            setCount(newAppInfo.count)
-            setScreenToggle(newAppInfo.screenToggle)
-            setStartValue(newAppInfo.startValue)
-            setMaxValue(newAppInfo.maxValue)
-            setError(newAppInfo.error)
+    useEffect(() => {
+        let thresholdAsString = localStorage.getItem('threshold')
+        if (thresholdAsString) {
+            let newThreshold = JSON.parse(thresholdAsString)
+            setThreshold(newThreshold)
         }
+    }, [])
+
+
+    useEffect(() => {
+        localStorage.setItem('counterScreenVal', JSON.stringify(count))
+        localStorage.setItem('screenToggle', JSON.stringify(screenToggle))
+        localStorage.setItem('startValue', JSON.stringify(startValue))
+        localStorage.setItem('maxValue', JSON.stringify(maxValue))
+        localStorage.setItem('error', JSON.stringify(error))
+        localStorage.setItem('threshold', JSON.stringify(threshold))
+    }, [count, startValue, maxValue, screenToggle, error, threshold])
+
+    /*const localStorageInfo = {
+    counterScreenVal: count,
+    screenToggle,
+    startValue,
+    maxValue,
+    error
+}*/
+
+    /*   let appInfoAsString = localStorage.getItem('appInfo')
+       console.log('appInfoAsString:', appInfoAsString)
+
+       const localstorageHandler = () => {
+           let newAppInfo = appInfoAsString ? JSON.parse(appInfoAsString) : ''
+           console.log('newAppInoObj:', newAppInfo)
+           setCount()
+           console.log(newAppInfo.count)
+           setScreenToggle(newAppInfo)
+           setStartValue(newAppInfo.startValue)
+           setMaxValue(newAppInfo.maxValue)
+           setError(newAppInfo.error)
+
+       }*/
+
+
+    /*useEffect(() => {
+        localstorageHandler()
     }, [])
 
     useEffect(() => {
         localStorage.setItem('appInfo', JSON.stringify(localStorageInfo))
-    }, [localStorageInfo])}*/
+    }, [localStorageInfo])*/
+
 
     return (
 

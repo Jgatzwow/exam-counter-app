@@ -1,117 +1,113 @@
-import React, {useEffect, useState} from 'react';
-import './App.css';
-import {CounterScreen} from './components/CounterScreen/CounterScreen';
-import {SuperButton} from './components/common/SuperButton';
-import {Settings} from './components/Settings/Settings';
-import {ErrorScreen} from './components/ErrorScreen/ErrorScren';
+import React from "react";
+import "./App.css";
+import { CounterScreen } from "./components/CounterScreen/CounterScreen";
+import { SuperButton } from "./components/common/SuperButton";
+import { Settings } from "./components/Settings/Settings";
+import { ErrorScreen } from "./components/ErrorScreen/ErrorScren";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  incrementCountAC,
+  InitialStateType,
+  onCountChangeAC,
+  onMaxValueChangeAC,
+  onScreenToggleAC,
+  onSetErrorAC,
+  onStartValueChangeAC,
+  onThresholdChangeAC,
+  resetCountAC,
+} from "./reduxstate/counterReducer";
+import { StateType } from "./reduxstate/store";
 
-function App() {
-    const greeting = 'Choose settings, Please! =)'
-    let initialStateValue = 0
+export const App = () => {
+  const counter = useSelector<StateType, InitialStateType>(
+    (state) => state.counter
+  );
+  const dispatch = useDispatch();
+  debugger;
+  const {
+    greeting,
+    count,
+    threshold,
+    maxValue,
+    startValue,
+    error,
+    screenToggle,
+  } = counter.data;
+  const incrementCountHandler = () => {
+    dispatch(incrementCountAC());
+  };
 
-    const [count, setCount] = useState(initialStateValue)
-    const [threshold, setThreshold] = useState(initialStateValue)
-    const [maxValue, setMaxValue] = useState(initialStateValue)
-    const [startValue, setStartValue] = useState(initialStateValue)
-    const [error, setError] = useState<string>('')
-    const [screenToggle, setScreenToggle] = useState<boolean>(false)
+  const resetCountHandler = () => {
+    dispatch(resetCountAC());
+  };
 
-    console.log('count: ', count)
-    console.log('threshold: ', threshold)
-    console.log('maxValue: ', maxValue)
-    console.log('startValue: ', startValue)
-    console.log('error: ', error)
-    console.log('screenToggle: ', screenToggle)
+  const onCountChangeHandler = (newCount: number) => {
+    dispatch(onCountChangeAC(newCount));
+  };
+  const onThresholdChangeHandler = (threshold: number) => {
+    dispatch(onThresholdChangeAC(threshold));
+  };
+  const onMaxValChangeHandler = (maxVal: number) => {
+    dispatch(onMaxValueChangeAC(maxVal));
+  };
+  const onStartValChangeHandler = (startVal: number) => {
+    dispatch(onStartValueChangeAC(startVal));
+  };
+  const onSetErrorHandler = (newError: string) => {
+    dispatch(onSetErrorAC(newError));
+  };
+  const onScreenToggleHandler = (flag: boolean) => {
+    dispatch(onScreenToggleAC(flag));
+  };
 
-
-    const incrementCount = () => {
-        if (count !== threshold)
-            setCount(count + 1)
-    }
-
-    const resetCount = () => {
-        setCount(startValue)
-    }
-
-
-    const localStorageInfo = {
-        count: count,
-        screenToggle: screenToggle,
-        startValue: startValue,
-        maxValue: maxValue,
-        error: error,
-        threshold: threshold
-    }
-
-    const localStorageHandler = () => {
-        let counterData = localStorage.getItem('counterData')
-
-        if (!counterData) {
-            localStorage.setItem('counterData', JSON.stringify(localStorageInfo))
-        } else {
-            let parsedData = JSON.parse(counterData ? counterData : '')
-            console.log('parsedData: ', parsedData)
-            setStartValue(parsedData.startValue)
-            setCount(parsedData.count)
-            setScreenToggle(parsedData.screenToggle)
-            setMaxValue(parsedData.maxValue)
-            setError(parsedData.error)
-            setThreshold(parsedData.threshold)
-        }
-    }
-
-    useEffect(() => {
-        localStorageHandler()
-    }, [])
-
-    useEffect(() => {
-        localStorage.setItem('counterData', JSON.stringify(localStorageInfo))
-    }, [count, startValue, maxValue, screenToggle, error, threshold])
-
-    console.log('localStorageInfo: ', localStorageInfo)
-
-    return (
-
-
-        <div className={'App__wrapper'}>
-            <h1 className={'counter__title'}>Hello this is my Counter</h1>
-            <div className="content__wrapper">
-                <Settings setCount={setCount}
-                          setThreshold={setThreshold}
-                          maxValue={maxValue}
-                          setMaxValue={setMaxValue}
-                          startValue={startValue}
-                          setStartValue={setStartValue}
-                          error={error}
-                          setError={setError}
-                          setScreenToggle={setScreenToggle}
-                />
+  return (
+    <div className={"App__wrapper"}>
+      <h1 className={"counter__title"}>Hello this is my Counter</h1>
+      <div className="content__wrapper">
+        <Settings
+          setCount={onCountChangeHandler}
+          setThreshold={onThresholdChangeHandler}
+          maxValue={maxValue}
+          setMaxValue={onMaxValChangeHandler}
+          startValue={startValue}
+          setStartValue={onStartValChangeHandler}
+          error={error}
+          setError={onSetErrorHandler}
+          setScreenToggle={onScreenToggleHandler}
+        />
+      </div>
+      <div className="content__wrapper">
+        <div className={"counter__screen-wrapper"}>
+          {error ? (
+            <ErrorScreen error={error} />
+          ) : (
+            <div className={"counter"}>
+              <CounterScreen
+                greeting={greeting}
+                count={count}
+                threshold={threshold}
+                screenToggle={screenToggle}
+              />
             </div>
-            <div className="content__wrapper">
-                <div className={'counter__screen-wrapper'}>
-                    {error ? <ErrorScreen error={error}/>
-                        : <div className={'counter'}>
-                            <CounterScreen greeting={greeting}
-                                           count={count}
-                                           threshold={threshold}
-                                           screenToggle={screenToggle}/>
-                        </div>}
-                    <div className={'btn_wrapper'}>
-                        <SuperButton className={'default__btn'}
-                                     disabled={count === threshold || !screenToggle || !!error}
-                                     onClick={incrementCount}>
-                            inc
-                        </SuperButton>
-                        <SuperButton className={'default__btn'}
-                                     disabled={count === startValue || !screenToggle || !!error}
-                                     onClick={resetCount}>
-                            reset
-                        </SuperButton>
-                    </div>
-                </div>
-            </div>
+          )}
+          <div className={"btn_wrapper"}>
+            <SuperButton
+              disabled={count === threshold || !screenToggle || !!error}
+              onClick={incrementCountHandler}
+            >
+              inc
+            </SuperButton>
+            <SuperButton
+              disabled={count === startValue || !screenToggle || !!error}
+              onClick={resetCountHandler}
+            >
+              reset
+            </SuperButton>
+          </div>
         </div>
-    );
-}
+      </div>
+    </div>
+  );
+};
 
 export default App;

@@ -1,91 +1,130 @@
-import React, {FC} from 'react';
-import {SuperButton} from '../common/SuperButton';
-import SuperInput from '../common/SuperInput';
+import React, { FC } from "react";
+import { SuperButton } from "../common/SuperButton";
+import SuperInput from "../common/SuperInput";
 
 type PropsType = {
-    setCount: (startVal: number) => void
-    setThreshold: (threshold: number) => void
-    maxValue: number
-    startValue: number
-    setStartValue: (startVal: number) => void
-    setMaxValue: (maxVal: number) => void
-    setError: (err: string) => void
-    setScreenToggle: (flag: boolean) => void
-    error: string
-}
-
+  setCount: (startVal: number) => void;
+  setThreshold: (threshold: number) => void;
+  maxValue: number;
+  startValue: number;
+  setStartValue: (startVal: number) => void;
+  setMaxValue: (maxVal: number) => void;
+  setError: (err: string) => void;
+  setScreenToggle: (flag: boolean) => void;
+  error: string;
+};
 
 export const Settings: FC<PropsType> = (props) => {
-    const {
-        setCount, setThreshold, setMaxValue,
-        startValue, setStartValue, maxValue,
-        setError, setScreenToggle, error
-    } = props
+  const {
+    setCount,
+    setThreshold,
+    setMaxValue,
+    startValue,
+    setStartValue,
+    maxValue,
+    setError,
+    setScreenToggle,
+    error,
+  } = props;
 
+  const resetDataHandler = () => {
+    setError("");
+    setCount(0);
+    setScreenToggle(false);
+  };
 
-    const onMaxValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setMaxValue( Math.floor(+e.currentTarget.value))
-        setError('')
-        setCount(0)
-        setScreenToggle(false)
+  const onMaxValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const maxValInputsValue = Math.floor(e.currentTarget.valueAsNumber);
+    setMaxValue(maxValInputsValue);
+    if (startValue === maxValInputsValue) {
+      setError("Start value should not equal max value");
+      return;
     }
-    const onStartValueChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setStartValue( Math.floor(+e.currentTarget.value))
-        setCount(0)
-        setError('')
-        setScreenToggle(false)
+    if (maxValInputsValue < 0) {
+      setError("Values should not be negative integers");
+      return;
     }
-
-
-    const onSetCountBtnHandler = () => {
-        if (startValue === maxValue) {
-            setError('Start value should not equal max value')
-        } else if (startValue < 0) {
-            setError('Values should not be negative integers')
-        } else if (startValue > maxValue) {
-            setError('Starting value should not be bigger than max value')
-        } else {
-            setError('')
-            setCount(startValue)
-            setThreshold(maxValue)
-            setScreenToggle(true)
-        }
+    if (startValue > maxValInputsValue) {
+      setError("Starting value should not be bigger than max value");
+      return;
     }
-    const onEnterKeyPressHandler = (e: React.KeyboardEvent<HTMLButtonElement>) => {
-        if (e.key === 'Enter') {
-            onSetCountBtnHandler()
-        }
+    resetDataHandler();
+  };
+  const onStartValueChangeHandler = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const startValInputsValue = Math.floor(e.currentTarget.valueAsNumber);
+    setStartValue(startValInputsValue);
+    if (startValInputsValue === maxValue) {
+      setError("Start value should not equal max value");
+      return;
     }
+    if (startValInputsValue < 0) {
+      setError("Values should not be negative integers");
+      return;
+    }
+    if (startValInputsValue > maxValue) {
+      setError("Starting value should not be bigger than max value");
+      return;
+    }
+    resetDataHandler();
+  };
 
-    return (
-        <div className={'settings__wrapper'}>
-            <div className={'counter'}>
-                <h2 className={'settings__title'}>max value:</h2>
-                <SuperInput type={'number'}
-                            className={error ? 'error__input' : 'default__input'}
-                            onChange={onMaxValueChangeHandler}
-                            value={maxValue.toString()}/>
-                {/*<input className={error ? 'error__input' : 'default__input'}
-                       onChange={onMaxValueChangeHandler}
-                       value={maxValue} type="number"/>*/}
-            </div>
-            <div className={'counter'}>
-                <h2 className={'settings__title'}>start value:</h2>
-                <SuperInput type={'number'}
-                            className={error ? 'error__input' : 'default__input'}
-                            onChange={onStartValueChangeHandler}
-                            value={startValue.toString()}/>
-                {/*<input className={error ? 'error__input' : 'default__input'}
-                       onChange={onStartValueChangeHandler}
-                       value={startValue} type="number"/>*/}
-            </div>
-            <div className={'btn_wrapper'}>
+  const onSetCountBtnHandler = () => {
+    if (startValue === maxValue) {
+      setError("Start value should not equal max value");
+      return;
+    }
+    if (startValue < 0) {
+      setError("Values should not be negative integers");
+      return;
+    }
+    if (startValue > maxValue) {
+      setError("Starting value should not be bigger than max value");
+      return;
+    }
+    setError("");
+    setCount(startValue);
+    setThreshold(maxValue);
+    setScreenToggle(true);
+  };
+  const onEnterKeyPressHandler = (
+    e: React.KeyboardEvent<HTMLButtonElement>
+  ) => {
+    if (e.key === "Enter") {
+      onSetCountBtnHandler();
+    }
+  };
 
-                <SuperButton onKeyDown={onEnterKeyPressHandler} onClick={onSetCountBtnHandler}
-                             className={'default__btn'}>
-                    set
-                </SuperButton>
-            </div>
-        </div>
-    )
-}
+  return (
+    <div className={"settings__wrapper"}>
+      <div className={"counter"}>
+        <h2 className={"settings__title"}>max value:</h2>
+        <SuperInput
+          type={"number"}
+          error={!!error}
+          onChange={onMaxValueChangeHandler}
+          value={maxValue.toString()}
+        />
+      </div>
+      <div className={"counter"}>
+        <h2 className={"settings__title"}>start value:</h2>
+        <SuperInput
+          error={!!error}
+          type={"number"}
+          onChange={onStartValueChangeHandler}
+          value={startValue.toString()}
+        />
+      </div>
+      <div className={"btn_wrapper"}>
+        <SuperButton
+          disabled={!!error}
+          onKeyDown={onEnterKeyPressHandler}
+          onClick={onSetCountBtnHandler}
+        >
+          set
+        </SuperButton>
+      </div>
+    </div>
+  );
+};

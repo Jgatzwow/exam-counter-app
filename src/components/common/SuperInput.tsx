@@ -1,44 +1,41 @@
-import React, {ChangeEvent, DetailedHTMLProps, InputHTMLAttributes} from 'react'
-import styles from './SuperInput.module.css'
-type DefaultInputPropsType = DetailedHTMLProps<InputHTMLAttributes<HTMLInputElement>, HTMLInputElement>
+import React, {
+  ChangeEvent,
+  DetailedHTMLProps,
+  InputHTMLAttributes,
+} from "react";
 
-// здесь мы говорим что у нашего инпута будут такие же пропсы как у обычного инпута
-// (чтоб не писать value: string, onChange: ...; они уже все описаны в DefaultInputPropsType)
-type SuperInputTextPropsType = DefaultInputPropsType & { // и + ещё пропсы которых нет в стандартном инпуте
-    onEnter?: () => void
-    error?: string
-    spanClassName?: string
-}
+type DefaultInputPropsType = DetailedHTMLProps<
+  InputHTMLAttributes<HTMLInputElement>,
+  HTMLInputElement
+>;
 
-const SuperInput: React.FC<SuperInputTextPropsType> = (
+type AdditionalProps = {
+  error?: boolean;
+};
+type SuperInputTextPropsType = DefaultInputPropsType & AdditionalProps;
 
-    {
-        onChange,
-        onKeyPress, onEnter,
-        error,
-        className, spanClassName,
+const SuperInput: React.FC<SuperInputTextPropsType> = ({
+  onChange,
+  onKeyPress,
+  className,
+  error,
+  ...restProps
+}) => {
+  const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
+    onChange && onChange(e);
+  };
 
-        ...restProps
-    }
-) => {
-    const onChangeCallback = (e: ChangeEvent<HTMLInputElement>) => {
-        onChange
-        && onChange(e)
-    }
+  const finalClassName = `${
+    error ? "error__input" : "default__input"
+  } ${className}`;
 
-    const finalSpanClassName = `${styles.error} ${spanClassName ? spanClassName : ''}`
-    const finalInputClassName = `${error ? styles.errorInput : styles.superInput} ${className}` // need to fix with (?:) and s.superInput
+  return (
+    <input
+      onChange={onChangeCallback}
+      className={finalClassName}
+      {...restProps}
+    />
+  );
+};
 
-    return (
-        <>
-            <input
-                onChange={onChangeCallback}
-                className={finalInputClassName}
-                {...restProps}
-            />
-            {error && <span className={finalSpanClassName}>{error}</span>}
-        </>
-    )
-}
-
-export default SuperInput
+export default SuperInput;
